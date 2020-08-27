@@ -2,16 +2,19 @@ import "./styles.css";
 
 const App = document.getElementById("app");
 const Player1 = document.getElementById("player1");
-const Data = document.getElementById("data");
+const Display = document.getElementById("display");
 
 App.addEventListener("mousemove", (event) => {
   const { clientY } = event;
   Player1.style.top = `${clientY}px`;
-  //Data.innerHTML = `${clientY}px`;
+
+  const paddle = Player1.getBoundingClientRect();
   
-  const rect = Player1.getBoundingClientRect();
-  //const rect = Info.getBoundingClientRect;
-  //Data.innerHTML = `x/left: ${rect.left}  y/top: ${rect.top}  right: ${rect.right}  bottom: ${rect.bottom}`;
+  //hacky way to assign box values
+  document.getElementById("xBox").innerHTML = `x: ${paddle.x}`;
+  document.getElementById("yBox").innerHTML = `y: ${paddle.y}`;
+  document.getElementById("rBox").innerHTML = `right: ${paddle.right}`;
+  document.getElementById("bBox").innerHTML = `bottom: ${paddle.bottom}`;
 });
 
 /* TODO:

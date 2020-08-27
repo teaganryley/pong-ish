@@ -23,7 +23,7 @@ body {
   background: white;
 }
 
-#data {
+#display {
   display: flex;
   width: 800px;
   height: 50px;
@@ -31,7 +31,7 @@ body {
   border: thick double #d35a03;
 }
 
-.datum {
+.data {
   display: flex;
   flex: 1;
   border: thin solid white;
