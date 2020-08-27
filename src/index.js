@@ -6,7 +6,9 @@ const Display = document.getElementById("display");
 
 App.addEventListener("mousemove", (event) => {
   const { clientY } = event;
-  Player1.style.top = `${clientY}px`;
+  if ((clientY-40 >= 10) && (clientY+40 <= 460)) {
+    Player1.style.top = `${clientY-40}px`;
+  }
 
   const paddle = Player1.getBoundingClientRect();
   
@@ -18,10 +20,8 @@ App.addEventListener("mousemove", (event) => {
 });
 
 /* TODO:
-    -as a user, i want a text box which Infos cursor and app box position
-    -research .getElementByID
-    -create play area, centered
-    -if outside of border, turn border red
-    -display info in each box
-    -set limits on paddle
+    -draw method --> game update loop?
+    -dial in top/bottom limits on paddle-- what is the value of a double thick border in pixels? 
+    -scroll speed lock for mouse-- mouse acceleration creates paddle movement problems  
+    -restrict mouse to play area?
 */
