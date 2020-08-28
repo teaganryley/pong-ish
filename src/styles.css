@@ -2,7 +2,6 @@ html {
   margin: 0;
   padding: 0;
   background: #000;
-  cursor: crosshair;
 }
 body {
   font-family: sans-serif;
@@ -11,16 +10,17 @@ body {
 #app {
   width: 800px;
   height: 450px;
-  border: thick double #d35a03;
+  border: solid #d35a03;
 }
 
-#player1 {
+#ball {
   position: absolute;
-  left: 20px;
-  top: 10px;
-  width: 10px;
-  height: 80px;
+  left: 400px;
+  top: 225px;
+  width: 30px;
+  height: 30px;
   background: white;
+  border-radius: 50%;
 }
 
 #display {
