@@ -8,39 +8,35 @@ let dx = -1;
 let dy = -1;
 let speed = 3;
 
-const paddle = App.getBoundingClientRect();
+const boundary = App.getBoundingClientRect();
   
 //hacky way to assign box values
-document.getElementById("xBox").innerHTML = `x: ${paddle.x}`;
-document.getElementById("yBox").innerHTML = `y: ${paddle.y}`;
-document.getElementById("rBox").innerHTML = `right: ${paddle.right}`;
-document.getElementById("bBox").innerHTML = `bottom: ${paddle.bottom}`;
+document.getElementById("lBox").innerHTML = `left: ${boundary.left}`;
+document.getElementById("rBox").innerHTML = `right: ${boundary.right}`;
+document.getElementById("tBox").innerHTML = `top: ${boundary.top}`;
+document.getElementById("bBox").innerHTML = `bottom: ${boundary.bottom}`;
 
 //main loop
 setInterval(()=>{
-  const { x, y } = Ball.getBoundingClientRect();
+  const { x, y, right, bottom } = Ball.getBoundingClientRect();
   
   //collision x axis
-  if (8 < x < 814 ) { //refactor to dynamic values
-    Ball.style.left = `${x + (dx * speed)}px`;
-  } else {
+  if (x <= 10 || right >= 814) { //refactor to dynamic values
     dx *= -1;
     Ball.style.left = `${x + (dx * speed)}px`;
+  } else {
+    Ball.style.left = `${Math.max(x + (dx * speed), 10)}px`;
   }
 
-  // collision y axis
-  if (8 < y < 464) {
-    Ball.style.top = `${y + (dy * speed)}px`;
-  } else {
-    dy *= -1;
-    Ball.style.top = `${y + (dy * speed)}px`;
-  }
+  //TODO: truncate righthand values
+
+  console.log(`x: ${x}, Dx: ${dx}`);
+
 }, 16.7);
 
 /* TODO:
     -randomize initial direction
     -collision logic
-      1) find out how to persist data outside of function scope, for dx and dy
-      2) do right hand collision once 1) is solved
+      0) should collision logic detect adjacency instead of range?
       3) refactor boiler-plate code
 */

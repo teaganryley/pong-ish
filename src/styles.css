@@ -10,7 +10,7 @@ body {
 #app {
   width: 800px;
   height: 450px;
-  border: solid #d35a03;
+  border: solid 2px #d35a03;
 }
 
 #ball {
