@@ -13,11 +13,12 @@ const bDimensions = Ball.getBoundingClientRect();
 const bWidth = bDimensions.right - bDimensions.x;
 
 const boundary = App.getBoundingClientRect();
+
 const adjacent = {
-  r: boundary.right-1-30,
+  r: boundary.right-1-bWidth,
   l: boundary.left+1,
   top: boundary.top+1,
-  bottom: boundary.bottom-1-30
+  bottom: boundary.bottom-1-bWidth
 };
 
 //hacky way to assign box values
@@ -32,9 +33,9 @@ setInterval(()=>{
   
   if ((x == adjacent.l && dx==-1) || (x == adjacent.r && dx==1)) {
     dx *= -1;
-  }
+  } 
   
-  if ((y == adjacent.top && dx==-1) || (y == adjacent.bottom && dx==1)) {
+  if ((y == adjacent.top && dy==-1) || (y == adjacent.bottom && dy==1)) {
     dy *= -1;
   }
 
@@ -44,6 +45,9 @@ setInterval(()=>{
   computedPosX = Math.min(Math.max(adjacent.l, computedPosX), adjacent.r);
   computedPosY = Math.min(Math.max(adjacent.top, computedPosY), adjacent.bottom);
   
+  //debug statement
+  console.log(`dx: ${dx}, dy: ${dy}, x: ${computedPosX}, y: ${computedPosY}`);
+
   Ball.style.left = `${computedPosX}px`;
   Ball.style.top = `${computedPosY}px`;
 
