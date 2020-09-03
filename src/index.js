@@ -26,26 +26,30 @@ document.getElementById("rBox").innerHTML = `right: ${boundary.right}`;
 document.getElementById("tBox").innerHTML = `top: ${boundary.top}`;
 document.getElementById("bBox").innerHTML = `bottom: ${boundary.bottom}`;
 
-
 //main loop
 setInterval(()=>{
   const { x, y } = Ball.getBoundingClientRect();
   
   if ((x == adjacent.l && dx==-1) || (x == adjacent.r && dx==1)) {
     dx *= -1;
-    console.log(`x: ${x}, Dx: ${dx}`);
   }
   
-  let computedPosition = x + (dx * speed);
+  if ((y == adjacent.top && dx==-1) || (y == adjacent.bottom && dx==1)) {
+    dy *= -1;
+  }
+
+  let computedPosX = x + (dx * speed);
+  let computedPosY = y + (dy * speed);
+
+  computedPosX = Math.min(Math.max(adjacent.l, computedPosX), adjacent.r);
+  computedPosY = Math.min(Math.max(adjacent.top, computedPosY), adjacent.bottom);
   
-  //ensure computed values fall within boundaries 
-  computedPosition = Math.min(Math.max(adjacent.l, computedPosition), adjacent.r);
-  
-  //move ball
-  Ball.style.left = `${computedPosition}px`;
+  Ball.style.left = `${computedPosX}px`;
+  Ball.style.top = `${computedPosY}px`;
+
 }, 16.7);
 
 /* TODO:
     -randomize initial direction
-    -collision logic
+    -bounce logic
 */
