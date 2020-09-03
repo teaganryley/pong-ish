@@ -1,27 +1,59 @@
 import "./styles.css";
 
 const App = document.getElementById("app");
-const Player1 = document.getElementById("player1");
+const Ball = document.getElementById("ball");
 const Display = document.getElementById("display");
 
-App.addEventListener("mousemove", (event) => {
-  const { clientY } = event;
-  if ((clientY-40 >= 10) && (clientY+40 <= 460)) {
-    Player1.style.top = `${clientY-40}px`;
+let dx = 1;
+let dy = 1;
+let speed = 3;
+
+//refactor: move to function with height
+const bDimensions = Ball.getBoundingClientRect();
+const bWidth = bDimensions.right - bDimensions.x;
+
+const boundary = App.getBoundingClientRect();
+
+const adjacent = {
+  r: boundary.right-1-bWidth,
+  l: boundary.left+1,
+  top: boundary.top+1,
+  bottom: boundary.bottom-1-bWidth
+};
+
+//hacky way to assign box values
+document.getElementById("lBox").innerHTML = `left: ${boundary.left}`;
+document.getElementById("rBox").innerHTML = `right: ${boundary.right}`;
+document.getElementById("tBox").innerHTML = `top: ${boundary.top}`;
+document.getElementById("bBox").innerHTML = `bottom: ${boundary.bottom}`;
+
+//main loop
+setInterval(()=>{
+  const { x, y } = Ball.getBoundingClientRect();
+  
+  if ((x == adjacent.l && dx==-1) || (x == adjacent.r && dx==1)) {
+    dx *= -1;
+  } 
+  
+  if ((y == adjacent.top && dy==-1) || (y == adjacent.bottom && dy==1)) {
+    dy *= -1;
   }
 
-  const paddle = Player1.getBoundingClientRect();
+  let computedPosX = x + (dx * speed);
+  let computedPosY = y + (dy * speed);
+
+  computedPosX = Math.min(Math.max(adjacent.l, computedPosX), adjacent.r);
+  computedPosY = Math.min(Math.max(adjacent.top, computedPosY), adjacent.bottom);
   
-  //hacky way to assign box values
-  document.getElementById("xBox").innerHTML = `x: ${paddle.x}`;
-  document.getElementById("yBox").innerHTML = `y: ${paddle.y}`;
-  document.getElementById("rBox").innerHTML = `right: ${paddle.right}`;
-  document.getElementById("bBox").innerHTML = `bottom: ${paddle.bottom}`;
-});
+  //debug statement
+  console.log(`dx: ${dx}, dy: ${dy}, x: ${computedPosX}, y: ${computedPosY}`);
+
+  Ball.style.left = `${computedPosX}px`;
+  Ball.style.top = `${computedPosY}px`;
+
+}, 16.7);
 
 /* TODO:
-    -draw method --> game update loop?
-    -dial in top/bottom limits on paddle-- what is the value of a double thick border in pixels? 
-    -scroll speed lock for mouse-- mouse acceleration creates paddle movement problems  
-    -restrict mouse to play area?
+    -randomize initial direction
+    -bounce logic
 */
