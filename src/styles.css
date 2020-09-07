@@ -28,14 +28,17 @@ body {
   width: 800px;
   height: 50px;
   margin-top: 3px;
-  border: thick double #d35a03;
+  border: solid 2px #d35a03;
 }
 
 .data {
   display: flex;
   flex: 1;
-  border: thin solid white;
   align-items: center;
   justify-content: center;
   color: white;
+}
+
+#boxP1 {
+  border-right: solid 2px #d35a03;
 }
